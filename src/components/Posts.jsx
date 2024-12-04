@@ -32,9 +32,7 @@ export const Posts = () => {
   };
 
   // handleUpdatePost
-  const handleUpdatePost = (curElem) => {
-    setUpdateDataApi(curElem);
-  };
+  const handleUpdatePost = (curElem) => setUpdateDataApi(curElem);
 
   return (
     <>

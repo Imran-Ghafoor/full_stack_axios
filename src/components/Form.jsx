@@ -33,7 +33,7 @@ export const Form = ({ data, setData, updateDataApi, setUpdateDataApi }) => {
   };
   const addPostData = async () => {
     const res = await postData(addData);
-    console.log("res", res);
+    // console.log("res", res);
 
     if (res.status === 201) {
       setData([...data, res.data]);
@@ -44,14 +44,15 @@ export const Form = ({ data, setData, updateDataApi, setUpdateDataApi }) => {
   const updatePostData = async () => {
     try {
       const res = await updateData(updateDataApi.id, addData);
-      setData((prev) => {
-        return prev.map((curElem) => {
-          return curElem.id === res.data.id ? res.data : curElem;
+      if (res.status === 200) {
+        setData((prev) => {
+          return prev.map((curElem) => {
+            return curElem.id === res.data.id ? res.data : curElem;
+          });
         });
-      });
-
-      setAddData({ title: "", body: "" });
-      setUpdateDataApi({}); // when edit button state not change into Add button
+        setAddData({ title: "", body: "" });
+        setUpdateDataApi({}); // when edit button state not change into Add button
+      }
     } catch (error) {
       console.log(error);
     }
@@ -60,7 +61,7 @@ export const Form = ({ data, setData, updateDataApi, setUpdateDataApi }) => {
   // form submission
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    const action = e.nativeEvent.submitter.value;
+    const action = e.nativeEvent.submitter.value; // to find current value of button is add OR edit
 
     if (action === "Add") {
       addPostData();
